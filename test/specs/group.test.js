@@ -1,25 +1,42 @@
-import LoginPage from '../pageobjects/login.page.js';
-import DashboardPage from '../pageobjects/dashboard.page.js';
-import GroupPage from '../pageobjects/group.page.js';
-import InvitePage from '../pageobjects/invite.page.js';
-import { generateUser } from '../utils/testData.js';
+const loginPage = require('../pageobjects/login.page');
+const registerPage = require('../pageobjects/Registration.page');
+const dashboardPage = require('../pageobjects/dashboard.page');
+const groupPage = require('../pageobjects/group.page');
 
-describe('Group + Invite Flow', () => {
+describe('Full Flow', () => {
 
-  it('should create group and invite user', async () => {
+    it('should register and create group', async () => {
 
-    const data = generateUser();
+        await loginPage.createAccountBtn.click();
 
-    await LoginPage.login('existing_user@test.com', 'Test@123');
+        await registerPage.register({
+            email: 'luke@starwars.com',
+            firstName: 'Luke',
+            lastName: 'Skywalker',
+            password: '123456',
+            role: 'Darth Vader'
+        });
 
-    await DashboardPage.goToCreateGroup();
+        // Handle popup
+        const yesBtn = await $('~Yes, I do');
+        if (await yesBtn.isDisplayed()) {
+            await yesBtn.click();
+        }
 
-    await GroupPage.createGroup(data.groupName, "Automation");
+        await dashboardPage.goToCreateGroup();
 
-    await GroupPage.openGroup(data.groupName);
+        await groupPage.createGroup({
+            name: 'Rebels Alliance',
+            description: 'Resistance group',
+            starship: 'X-wing',
+            members: ['han@falcon.com']
+        });
 
-    await InvitePage.invite('receiver@test.com');
+        await groupPage.saveGroup();
 
-  });
+        const groupTitle = await $('android=new UiSelector().text("Rebels Alliance")');
+        await expect(groupTitle).toBeDisplayed();
+
+    });
 
 });

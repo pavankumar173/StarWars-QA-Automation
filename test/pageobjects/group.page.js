@@ -1,20 +1,66 @@
 class GroupPage {
 
-  get name() { return $('~groupNameInput'); }
-  get desc() { return $('~groupDescriptionInput'); }
-  get save() { return $('~saveGroupButton'); }
+    get groupName() {
+        return $('android=new UiSelector().text("Enter group name")');
+    }
 
-  async createGroup(name, desc) {
-    await this.name.setValue(name);
-    await this.desc.setValue(desc);
-    await this.save.click();
-  }
+    get description() {
+        return $('android=new UiSelector().text("Enter group description")');
+    }
 
-  async openGroup(name) {
-    const group = $(`//*[@text="${name}"]`);
-    await group.waitForDisplayed();
-    await group.click();
-  }
+    get starshipDropdown() {
+        return $('android=new UiSelector().descriptionContains("Starship")');
+    }
+
+    get searchField() {
+        return $('android=new UiSelector().text("Search people by name")');
+    }
+
+    get inviteMemberBtn() {
+        return $('android=new UiSelector().descriptionContains("Invite member")');
+    }
+
+    get emailInput() {
+        return $('android=new UiSelector().text("Email address")');
+    }
+
+    get inviteBtn() {
+        return $('~Invite');
+    }
+
+    get saveBtn() {
+        return $('android=new UiSelector().text("Save")');
+    }
+
+    async selectStarship(name) {
+        await this.starshipDropdown.click();
+        await this.searchField.setValue(name);
+        await $(`android=new UiSelector().text("${name}")`).click();
+    }
+
+    async inviteMember(email) {
+        await this.inviteMemberBtn.click();
+        await this.emailInput.setValue(email);
+        await this.inviteBtn.click();
+    }
+
+    async createGroup(data) {
+        await this.groupName.waitForDisplayed();
+        await this.groupName.setValue(data.name);
+
+        await this.description.setValue(data.description);
+
+        await this.selectStarship(data.starship);
+
+        for (let member of data.members) {
+            await this.inviteMember(member);
+        }
+    }
+
+    async saveGroup() {
+        await this.saveBtn.waitForClickable();
+        await this.saveBtn.click();
+    }
 }
 
-export default new GroupPage();
+module.exports = new GroupPage();

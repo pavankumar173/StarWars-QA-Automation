@@ -36,6 +36,7 @@ exports.config = {
     // time. Depending on the number of capabilities, WebdriverIO launches several test
     // sessions. Within your capabilities you can overwrite the spec and exclude options in
     // order to group specific specs to a specific capability.
+
     //
     // First, you can define how many instances should be started at the same time. Let's
     // say you have 3 different capabilities (Chrome, Firefox, and Safari) and you have
@@ -44,20 +45,23 @@ exports.config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 10,
+    maxInstances: 1,
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
-    capabilities: [{
-        // capabilities for local Appium web tests on an Android Emulator
-        platformName: 'Android',
-        browserName: 'Chrome',
-        'appium:deviceName': 'Android GoogleAPI Emulator',
-        'appium:platformVersion': '12.0',
-        'appium:automationName': 'UiAutomator2'
-    }],
+       capabilities: [{
+           platformName: "Android",
+           "appium:deviceName": "10MF4UFL2P0001B",
+           "appium:automationName": "UiAutomator2",
+           "appium:app": "C:\\StarWarsApp\\android\\app\\build\\outputs\\apk\\debug\\app-debug.apk",
+           "appium:noReset": false,
+           "maxInstances": 1,
+           "appium:newCommandTimeout": 300,
+           "appium:adbExecTimeout": 120000,
+           "appium:autoGrantPermissions": true,
+       }],
 
     //
     // ===================

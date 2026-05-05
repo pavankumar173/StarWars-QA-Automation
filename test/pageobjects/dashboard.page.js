@@ -1,15 +1,12 @@
 class DashboardPage {
 
-  get dashboard() { return $('~dashboardScreen'); }
-  get createGroupBtn() { return $('~createGroupButton'); }
+    get createGroupBtn() {
+        return $('android=new UiSelector().descriptionContains("Create Group")');
+    }
 
-  async isLoaded() {
-    return await this.dashboard.isDisplayed();
-  }
-
-  async goToCreateGroup() {
-    await this.createGroupBtn.click();
-  }
+    async goToCreateGroup() {
+        await this.createGroupBtn.click();
+    }
 }
 
-export default new DashboardPage();
+module.exports = new DashboardPage();

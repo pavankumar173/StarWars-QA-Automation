@@ -1,17 +1,17 @@
 const loginPage = require('../pageobjects/login.page');
-const registerPage = require('../pageobjects/Registration.page');
+const registerPage = require('../pageobjects/register.page');
 
 describe('Register Test', () => {
 
     it('should create user', async () => {
 
-        await loginPage.createAccountBtn.click();
+        await loginPage.openRegisterPage();
 
         await registerPage.register({
-            email: 'luke@starwars.com',
-            firstName: 'Luke',
+            email: 'pavan3@starwars.com',
+            firstName: 'pavan',
             lastName: 'Skywalker',
-            password: '123456',
+            password: 'Pavan@1234',
             role: 'Darth Vader'
         });
 

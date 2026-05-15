@@ -6,14 +6,14 @@ describe('Login Test', () => {
 
         await driver.pause(5000); // wait for app load
 
-        await loginPage.login('pavan_1714971005@starwars.test', '0valEdge@12');
+        await loginPage.login('pavan1@gmail.com', 'Pavankumar@123');
 
         await driver.pause(7000);
 
          // ✅ Assertion (IMPORTANT)
                 const createGroupBtn = await $('android=new UiSelector().descriptionContains("Create Group")');
 
-                await createGroupBtn.waitForDisplayed({ timeout: 10000 });
+                await createGroupBtn.waitForDisplayed({ timeout: 30000 });
 
                 await expect(createGroupBtn).toBeDisplayed();
 

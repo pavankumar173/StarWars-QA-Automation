@@ -56,7 +56,7 @@ exports.config = {
            "appium:deviceName": "10MF4UFL2P0001B",
            "appium:automationName": "UiAutomator2",
            "appium:app": "C:\\StarWarsApp\\android\\app\\build\\outputs\\apk\\debug\\app-debug.apk",
-           "appium:noReset": false,
+           "appium:noReset": true,
            "maxInstances": 1,
            "appium:newCommandTimeout": 300,
            "appium:adbExecTimeout": 120000,
@@ -238,6 +238,21 @@ exports.config = {
      */
     // afterTest: function(test, context, { error, result, duration, passed, retries }) {
     // },
+        // },
+    afterTest: async function (test, context, { error, passed }) {
+
+        if (!passed) {
+
+            const fileName = test.title.replace(/[^a-zA-Z0-9]/g, '_');
+
+            const path =
+                `C:/Users/USER/starwars-automation/screenshots/${fileName}.png`;
+
+            await browser.saveScreenshot(path);
+
+            console.log("Screenshot saved:", path);
+        }
+    },
 
 
     /**
@@ -263,7 +278,7 @@ exports.config = {
      * @param {Array.<String>} specs List of spec file paths that ran
      */
     // after: function (result, capabilities, specs) {
-    // },
+
     /**
      * Gets executed right after terminating the webdriver session.
      * @param {object} config wdio configuration object

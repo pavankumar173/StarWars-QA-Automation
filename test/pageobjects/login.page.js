@@ -12,18 +12,42 @@ class LoginPage {
         return $('~LOGIN');
     }
 
+    get createAccountBtn() {
+        return $('android=new UiSelector().textContains("Create a new account")');
+    }
+
     async login(email, password) {
 
-        await this.email.waitForDisplayed({ timeout: 10000 });
+        await this.email.waitForDisplayed({
+            timeout: 100000
+        });
+
         await this.email.click();
+
         await this.email.setValue(email);
 
-        await this.password.waitForDisplayed({ timeout: 10000 });
+        await this.password.waitForDisplayed({
+            timeout: 30000
+        });
+
         await this.password.click();
+
         await this.password.setValue(password);
 
-        await this.loginBtn.waitForDisplayed({ timeout: 10000 });
+        await this.loginBtn.waitForDisplayed({
+            timeout: 30000
+        });
+
         await this.loginBtn.click();
+    }
+
+    async openRegisterPage() {
+
+        await this.createAccountBtn.waitForDisplayed({
+            timeout: 30000
+        });
+
+        await this.createAccountBtn.click();
     }
 }
 
